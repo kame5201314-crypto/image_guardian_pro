@@ -4,16 +4,15 @@
  */
 
 export const CONFIG = {
-  // 🎯 相似度閾值（0-100）
-  SIMILARITY_THRESHOLD: 85,
+  // 🎯 相似度閾值（0-100）- 設定較低以捕捉更多潛在侵權
+  SIMILARITY_THRESHOLD: 50,
 
-  // 🌐 支援的掃描平台
+  // 🌐 支援的掃描平台（台灣主要電商 + Google）
   SCAN_PLATFORMS: [
-    { id: 'google', name: 'Google Images', enabled: true },
-    { id: 'bing', name: 'Bing Images', enabled: true },
-    { id: 'yandex', name: 'Yandex Images', enabled: true },
-    { id: 'taobao', name: '淘寶', enabled: true },
-    { id: 'pinterest', name: 'Pinterest', enabled: true },
+    { id: 'shopee', name: '蝦皮購物', enabled: true },
+    { id: 'momo', name: 'momo購物網', enabled: true },
+    { id: 'ruten', name: '露天拍賣', enabled: true },
+    { id: 'google', name: 'Google 圖片', enabled: true },
   ] as const,
 
   // ⏰ 自動掃描排程（Cron 表達式）
