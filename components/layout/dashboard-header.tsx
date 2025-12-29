@@ -11,16 +11,16 @@ export function DashboardHeader({ title }: DashboardHeaderProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <header className="h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-6 sticky top-0 z-30">
+    <header className="h-16 bg-white border-b border-neutral-200 flex items-center justify-between px-6 pl-16 lg:pl-6 sticky top-0 z-30">
       {/* Page title */}
-      <h1 className="text-lg font-semibold text-[#1d1d1f] hidden sm:block">
+      <h1 className="text-lg font-semibold text-[#1d1d1f]">
         {title}
       </h1>
 
       {/* Right section */}
-      <div className="flex items-center gap-3 ml-auto">
+      <div className="flex items-center gap-3">
         {/* Search */}
-        <div className="relative">
+        <div className="relative hidden sm:block">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
           <input
             type="text"
@@ -38,7 +38,7 @@ export function DashboardHeader({ title }: DashboardHeaderProps) {
         </button>
 
         {/* User avatar */}
-        <button className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0071e3] to-[#7c3aed] flex items-center justify-center text-white text-sm font-medium">
+        <button className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#0071e3] to-[#7c3aed] flex items-center justify-center text-white text-sm font-semibold">
           A
         </button>
       </div>

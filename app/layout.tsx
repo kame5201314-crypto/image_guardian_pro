@@ -21,11 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW" className={inter.variable}>
-      <body className="min-h-screen bg-[#f8f9fa] antialiased font-sans">
+      <body className="min-h-screen bg-[#f5f5f7] antialiased font-sans">
         <Sidebar />
-        <main className="lg:pl-[240px] min-h-screen transition-all duration-300">
+        <div className="lg:ml-[260px] min-h-screen">
           {children}
-        </main>
+        </div>
       </body>
     </html>
   );
