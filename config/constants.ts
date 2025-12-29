@@ -56,6 +56,23 @@ export const CONFIG = {
     RESOLVED: 'resolved',
     IGNORED: 'ignored',
   } as const,
+
+  // 🛡️ 侵權案件狀態
+  INFRINGEMENT_STATUS: {
+    PENDING: 'pending',
+    EVIDENCED: 'evidenced',
+    REPORTED: 'reported',
+    RESOLVED: 'resolved',
+    DISMISSED: 'dismissed',
+  } as const,
+
+  // ⚡ 優先級
+  PRIORITY: {
+    LOW: 'low',
+    MEDIUM: 'medium',
+    HIGH: 'high',
+    CRITICAL: 'critical',
+  } as const,
 } as const;
 
 // 型別匯出
@@ -63,3 +80,5 @@ export type ScanPlatform = typeof CONFIG.SCAN_PLATFORMS[number]['id'];
 export type EvidenceType = typeof CONFIG.EVIDENCE_TYPES[number]['id'];
 export type ScanStatus = typeof CONFIG.SCAN_STATUS[keyof typeof CONFIG.SCAN_STATUS];
 export type MatchStatus = typeof CONFIG.MATCH_STATUS[keyof typeof CONFIG.MATCH_STATUS];
+export type InfringementStatus = typeof CONFIG.INFRINGEMENT_STATUS[keyof typeof CONFIG.INFRINGEMENT_STATUS];
+export type Priority = typeof CONFIG.PRIORITY[keyof typeof CONFIG.PRIORITY];

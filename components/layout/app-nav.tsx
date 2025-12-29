@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { FolderOpen, Radar, Scale } from "lucide-react";
+import { FolderOpen, Radar, Scale, Shield } from "lucide-react";
 
 const navItems = [
   {
@@ -19,8 +19,14 @@ const navItems = [
     description: "Scan Engine",
   },
   {
+    href: "/infringements",
+    label: "維權中心",
+    icon: Shield,
+    description: "Guardian Center",
+  },
+  {
     href: "/evidence",
-    label: "維權存證",
+    label: "存證庫",
     icon: Scale,
     description: "Evidence Vault",
   },

@@ -212,6 +212,139 @@ export interface Database {
           }
         ];
       };
+      infringements: {
+        Row: {
+          id: string;
+          org_id: string;
+          asset_id: string;
+          match_id: string | null;
+          case_number: string;
+          status: string;
+          priority: string;
+          infringing_url: string;
+          infringing_platform: string;
+          infringing_seller: string | null;
+          infringing_title: string | null;
+          screenshot_url: string | null;
+          screenshot_path: string | null;
+          screenshot_hash: string | null;
+          screenshot_taken_at: string | null;
+          ai_similarity_score: number | null;
+          ai_confidence_score: number | null;
+          ai_assessment_report: Json | null;
+          ai_conclusion: string | null;
+          ai_assessed_at: string | null;
+          reported_at: string | null;
+          reported_method: string | null;
+          reported_reference: string | null;
+          report_email_content: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id?: string;
+          asset_id: string;
+          match_id?: string | null;
+          case_number: string;
+          status?: string;
+          priority?: string;
+          infringing_url: string;
+          infringing_platform: string;
+          infringing_seller?: string | null;
+          infringing_title?: string | null;
+          screenshot_url?: string | null;
+          screenshot_path?: string | null;
+          screenshot_hash?: string | null;
+          screenshot_taken_at?: string | null;
+          ai_similarity_score?: number | null;
+          ai_confidence_score?: number | null;
+          ai_assessment_report?: Json | null;
+          ai_conclusion?: string | null;
+          ai_assessed_at?: string | null;
+          reported_at?: string | null;
+          reported_method?: string | null;
+          reported_reference?: string | null;
+          report_email_content?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          asset_id?: string;
+          match_id?: string | null;
+          case_number?: string;
+          status?: string;
+          priority?: string;
+          infringing_url?: string;
+          infringing_platform?: string;
+          infringing_seller?: string | null;
+          infringing_title?: string | null;
+          screenshot_url?: string | null;
+          screenshot_path?: string | null;
+          screenshot_hash?: string | null;
+          screenshot_taken_at?: string | null;
+          ai_similarity_score?: number | null;
+          ai_confidence_score?: number | null;
+          ai_assessment_report?: Json | null;
+          ai_conclusion?: string | null;
+          ai_assessed_at?: string | null;
+          reported_at?: string | null;
+          reported_method?: string | null;
+          reported_reference?: string | null;
+          report_email_content?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "infringements_asset_id_fkey";
+            columns: ["asset_id"];
+            referencedRelation: "assets";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "infringements_match_id_fkey";
+            columns: ["match_id"];
+            referencedRelation: "scan_matches";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+      system_logs: {
+        Row: {
+          id: string;
+          org_id: string;
+          level: string;
+          source: string;
+          message: string;
+          metadata: Json | null;
+          stack_trace: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          org_id?: string;
+          level: string;
+          source: string;
+          message: string;
+          metadata?: Json | null;
+          stack_trace?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          org_id?: string;
+          level?: string;
+          source?: string;
+          message?: string;
+          metadata?: Json | null;
+          stack_trace?: string | null;
+          created_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: Record<string, never>;
     Functions: {
@@ -241,3 +374,38 @@ export type ScanMatchUpdate = Database['public']['Tables']['scan_matches']['Upda
 export type Evidence = Database['public']['Tables']['evidence']['Row'];
 export type EvidenceInsert = Database['public']['Tables']['evidence']['Insert'];
 export type EvidenceUpdate = Database['public']['Tables']['evidence']['Update'];
+
+export type Infringement = Database['public']['Tables']['infringements']['Row'];
+export type InfringementInsert = Database['public']['Tables']['infringements']['Insert'];
+export type InfringementUpdate = Database['public']['Tables']['infringements']['Update'];
+
+export type SystemLog = Database['public']['Tables']['system_logs']['Row'];
+export type SystemLogInsert = Database['public']['Tables']['system_logs']['Insert'];
+
+// AI 鑑定報告結構
+export interface AIAssessmentReport {
+  subject_comparison: {
+    original_features: string[];
+    infringing_features: string[];
+    match_percentage: number;
+    analysis: string;
+  };
+  background_comparison: {
+    original_bg: string;
+    infringing_bg: string;
+    is_different: boolean;
+    analysis: string;
+  };
+  manipulation_detection: {
+    watermark_removed: boolean;
+    cropped: boolean;
+    color_adjusted: boolean;
+    analysis: string;
+  };
+  conclusion: {
+    is_infringement: boolean;
+    confidence_score: number;
+    severity: 'low' | 'medium' | 'high' | 'critical';
+    legal_recommendation: string;
+  };
+}
