@@ -21,12 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW" className={inter.variable}>
-      <body className="min-h-screen bg-[#f5f5f7] antialiased font-sans">
-        <Sidebar />
-        {/* Main content - offset for sidebar on desktop */}
-        <main className="main-content">
-          {children}
-        </main>
+      <body className="min-h-screen bg-[#f5f5f7] antialiased font-sans overflow-x-hidden">
+        {/* App Container with Flex Layout */}
+        <div className="app-layout">
+          {/* Fixed Sidebar */}
+          <Sidebar />
+
+          {/* Main Content Area */}
+          <main className="main-content">
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );

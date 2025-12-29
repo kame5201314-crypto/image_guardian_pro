@@ -264,13 +264,32 @@ html {
    Dashboard Layout
    ============================================ */
 
-.main-content {
-  min-height: 100vh;
-  margin-left: 0;
+/* Sidebar width variable */
+:root {
+  --sidebar-width: 260px;
+  --header-height: 64px;
 }
 
+/* App layout container */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Main content area */
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Desktop: offset main content for fixed sidebar */
 @media (min-width: 1024px) {
   .main-content {
-    margin-left: 260px;
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
   }
 }
