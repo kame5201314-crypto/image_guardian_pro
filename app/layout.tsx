@@ -23,9 +23,10 @@ export default function RootLayout({
     <html lang="zh-TW" className={inter.variable}>
       <body className="min-h-screen bg-[#f5f5f7] antialiased font-sans">
         <Sidebar />
-        <div className="lg:ml-[260px] min-h-screen">
+        {/* Main content - offset for sidebar on desktop */}
+        <main className="main-content">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );

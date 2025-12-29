@@ -259,3 +259,18 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
+
+/* ============================================
+   Dashboard Layout
+   ============================================ */
+
+.main-content {
+  min-height: 100vh;
+  margin-left: 0;
+}
+
+@media (min-width: 1024px) {
+  .main-content {
+    margin-left: 260px;
+  }
+}
