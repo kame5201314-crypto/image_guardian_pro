@@ -5,20 +5,23 @@ import { Shield } from "lucide-react";
 
 export function AppHeader() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-neutral-100 bg-white/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center gap-3 transition-opacity hover:opacity-80">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-neutral-900">
-            <Shield className="h-5 w-5 text-white" />
+    <header className="sticky top-0 z-50 w-full glass border-b border-black/[0.04]">
+      <div className="mx-auto flex h-12 max-w-[980px] items-center justify-between px-4 lg:px-0">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 transition-opacity duration-200 hover:opacity-70"
+        >
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#1d1d1f] to-[#424245]">
+            <Shield className="h-4 w-4 text-white" />
           </div>
-          <span className="text-lg font-semibold tracking-tight">Image Guardian</span>
+          <span className="text-sm font-semibold tracking-tight text-[#1d1d1f]">
+            Image Guardian
+          </span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-neutral-400 bg-neutral-100 px-2 py-1 rounded-full">
-            Pro Edition
-          </span>
-        </div>
+        <span className="text-[11px] font-medium text-[#86868b] tracking-wide uppercase">
+          Pro
+        </span>
       </div>
     </header>
   );

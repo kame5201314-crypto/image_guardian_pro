@@ -3,26 +3,31 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0071e3] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bg-neutral-900 text-white shadow-sm hover:bg-neutral-800 active:scale-[0.98]",
-        destructive:
-          "bg-red-500 text-white shadow-sm hover:bg-red-600 active:scale-[0.98]",
-        outline:
-          "border border-neutral-200 bg-white shadow-sm hover:bg-neutral-50 hover:text-neutral-900 active:scale-[0.98]",
+          "bg-[#1d1d1f] text-white rounded-full hover:bg-[#424245] active:scale-[0.97] shadow-sm",
+        blue:
+          "bg-[#0071e3] text-white rounded-full hover:bg-[#0077ed] active:scale-[0.97] shadow-sm",
         secondary:
-          "bg-neutral-100 text-neutral-900 shadow-sm hover:bg-neutral-200 active:scale-[0.98]",
-        ghost: "hover:bg-neutral-100 hover:text-neutral-900",
-        link: "text-neutral-900 underline-offset-4 hover:underline",
+          "bg-[#f5f5f7] text-[#1d1d1f] rounded-full hover:bg-[#e8e8ed] active:scale-[0.97]",
+        outline:
+          "border border-[#d2d2d7] bg-white text-[#1d1d1f] rounded-full hover:bg-[#f5f5f7] active:scale-[0.97]",
+        ghost:
+          "text-[#0071e3] hover:bg-[#f5f5f7] rounded-xl",
+        link:
+          "text-[#0071e3] underline-offset-4 hover:underline p-0 h-auto",
+        destructive:
+          "bg-[#ff3b30] text-white rounded-full hover:opacity-90 active:scale-[0.97] shadow-sm",
       },
       size: {
-        default: "h-10 px-5 py-2",
-        sm: "h-8 rounded-lg px-3 text-xs",
-        lg: "h-12 rounded-xl px-8 text-base",
-        icon: "h-10 w-10",
+        sm: "h-8 px-4 text-xs",
+        default: "h-10 px-6",
+        lg: "h-12 px-8 text-base",
+        xl: "h-14 px-10 text-lg",
+        icon: "h-10 w-10 rounded-full",
       },
     },
     defaultVariants: {
