@@ -2,7 +2,19 @@ import Link from "next/link";
 import { getAssets } from "@/app/actions/asset-actions";
 import { getScans } from "@/app/actions/scan-actions";
 import { getInfringementStats } from "@/app/actions/infringement-actions";
-import { FolderOpen, Radar, Shield, Scale, ArrowRight, Sparkles } from "lucide-react";
+import { DashboardHeader } from "@/components/layout/dashboard-header";
+import {
+  FolderOpen,
+  Radar,
+  Shield,
+  Scale,
+  ArrowRight,
+  TrendingUp,
+  ImageIcon,
+  AlertTriangle,
+  CheckCircle,
+  Sparkles,
+} from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -17,193 +29,155 @@ export default async function HomePage() {
   const scanCount = scansResult.data?.length || 0;
   const matchCount = scansResult.data?.reduce((sum, s) => sum + (s.match_count || 0), 0) || 0;
   const pendingCases = infringementStats.pending || 0;
+  const resolvedCases = infringementStats.resolved || 0;
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-[#f5f5f7]">
-        {/* Background gradient orbs */}
-        <div className="absolute top-1/4 -right-1/4 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-blue-100 to-purple-100 opacity-60 blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-green-100 to-blue-100 opacity-40 blur-3xl animate-pulse-slow delay-200" />
+    <div className="min-h-screen">
+      <DashboardHeader title="儀表板" />
 
-        <div className="relative max-w-[980px] mx-auto px-5 sm:px-6 lg:px-0 py-16 sm:py-24 lg:py-32">
-          <div className="text-center max-w-3xl mx-auto">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm text-[#86868b] text-[11px] sm:text-xs font-medium mb-6 sm:mb-8 shadow-sm animate-fade-in-up">
-              <Sparkles className="w-3 sm:w-3.5 h-3 sm:h-3.5 text-[#0071e3]" />
-              AI-Powered Protection
-            </div>
-
-            {/* Main headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-[#1d1d1f] leading-[1.08] mb-5 sm:mb-6 animate-fade-in-up delay-100">
-              守護您的
-              <br />
-              <span className="bg-gradient-to-r from-[#0071e3] to-[#7c3aed] bg-clip-text text-transparent">
-                視覺資產
-              </span>
-            </h1>
-
-            {/* Subheadline */}
-            <p className="text-base sm:text-lg lg:text-xl text-[#86868b] leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto px-2 animate-fade-in-up delay-200">
-              Image Guardian Pro 運用先進的 AI 技術，
-              <br className="hidden sm:block" />
-              全天候監控網路上的圖片侵權行為，自動蒐集證據。
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 animate-fade-in-up delay-300 px-4 sm:px-0">
-              <Link
-                href="/assets"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#1d1d1f] text-white rounded-full font-medium text-sm sm:text-base hover:bg-[#424245] transition-all duration-200 active:scale-[0.97]"
-              >
-                開始使用
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                href="#features"
-                className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 sm:py-4 bg-white/80 backdrop-blur-sm text-[#1d1d1f] rounded-full font-medium text-sm sm:text-base border border-[#d2d2d7] hover:bg-white transition-all duration-200"
-              >
-                了解更多
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-12 sm:py-16 lg:py-20 bg-white border-y border-black/[0.04]">
-        <div className="max-w-[980px] mx-auto px-5 sm:px-6 lg:px-0">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-12">
-            <Link href="/assets" className="group text-center">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1d1d1f] mb-1 sm:mb-2 transition-transform duration-300 group-hover:scale-105">
-                {assetCount}
-              </div>
-              <div className="text-xs sm:text-sm text-[#86868b] font-medium">受保護資產</div>
-            </Link>
-
-            <Link href="/scan" className="group text-center">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1d1d1f] mb-1 sm:mb-2 transition-transform duration-300 group-hover:scale-105">
-                {scanCount}
-              </div>
-              <div className="text-xs sm:text-sm text-[#86868b] font-medium">掃描次數</div>
-            </Link>
-
-            <Link href="/scan" className="group text-center">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1d1d1f] mb-1 sm:mb-2 transition-transform duration-300 group-hover:scale-105">
-                {matchCount}
-              </div>
-              <div className="text-xs sm:text-sm text-[#86868b] font-medium">偵測結果</div>
-            </Link>
-
-            <Link href="/infringements" className="group text-center">
-              <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1d1d1f] mb-1 sm:mb-2 transition-transform duration-300 group-hover:scale-105">
-                {pendingCases}
-              </div>
-              <div className="text-xs sm:text-sm text-[#86868b] font-medium">待處理案件</div>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section id="features" className="py-16 sm:py-24 lg:py-32 bg-[#f5f5f7]">
-        <div className="max-w-[980px] mx-auto px-5 sm:px-6 lg:px-0">
-          <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1d1d1f] mb-3 sm:mb-4">
-              強大功能
+      <div className="p-6 lg:p-8 space-y-6">
+        {/* Welcome Banner */}
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1d1d1f] to-[#424245] p-6 lg:p-8">
+          <div className="relative z-10">
+            <h2 className="text-xl lg:text-2xl font-bold text-white mb-2">
+              歡迎使用 Image Guardian Pro
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-[#86868b] max-w-xl mx-auto px-4">
-              從上傳到維權，一站式解決您的圖片保護需求
+            <p className="text-white/60 text-sm lg:text-base max-w-xl">
+              使用 AI 技術保護您的視覺資產，全天候監控網路侵權行為
             </p>
+            <Link
+              href="/assets"
+              className="inline-flex items-center gap-2 mt-4 px-5 py-2.5 bg-white text-[#1d1d1f] rounded-xl text-sm font-medium hover:bg-neutral-100 transition-colors"
+            >
+              <Sparkles className="w-4 h-4" />
+              開始上傳
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-            {/* Feature 1 - Asset Management */}
-            <Link href="/assets" className="group">
-              <div className="h-full p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-[#0071e3]/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-110">
-                  <FolderOpen className="w-6 sm:w-7 h-6 sm:h-7 text-[#0071e3]" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-[#1d1d1f] mb-2 sm:mb-3">資產管理</h3>
-                <p className="text-sm sm:text-base text-[#86868b] leading-relaxed">
-                  上傳並管理您的原創圖片，建立完整的數位資產清單，支援批量操作。
-                </p>
-              </div>
-            </Link>
-
-            {/* Feature 2 - Scan Engine */}
-            <Link href="/scan" className="group">
-              <div className="h-full p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-[#34c759]/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-110">
-                  <Radar className="w-6 sm:w-7 h-6 sm:h-7 text-[#34c759]" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-[#1d1d1f] mb-2 sm:mb-3">智慧掃描</h3>
-                <p className="text-sm sm:text-base text-[#86868b] leading-relaxed">
-                  AI 驅動的全網掃描，覆蓋蝦皮、momo、露天、Google 等主要平台。
-                </p>
-              </div>
-            </Link>
-
-            {/* Feature 3 - Rights Center */}
-            <Link href="/infringements" className="group">
-              <div className="h-full p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-[#7c3aed]/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-110">
-                  <Shield className="w-6 sm:w-7 h-6 sm:h-7 text-[#7c3aed]" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-[#1d1d1f] mb-2 sm:mb-3">維權中心</h3>
-                <p className="text-sm sm:text-base text-[#86868b] leading-relaxed">
-                  AI 鑑定報告、一鍵截圖存證、自動生成檢舉信，全方位守護權益。
-                </p>
-              </div>
-            </Link>
-
-            {/* Feature 4 - Evidence Vault */}
-            <Link href="/evidence" className="group">
-              <div className="h-full p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white shadow-[0_2px_12px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-xl sm:rounded-2xl bg-[#ff9500]/10 flex items-center justify-center mb-4 sm:mb-6 transition-transform duration-300 group-hover:scale-110">
-                  <Scale className="w-6 sm:w-7 h-6 sm:h-7 text-[#ff9500]" />
-                </div>
-                <h3 className="text-lg sm:text-xl font-semibold text-[#1d1d1f] mb-2 sm:mb-3">法律存證</h3>
-                <p className="text-sm sm:text-base text-[#86868b] leading-relaxed">
-                  SHA-256 雜湊認證、時間戳記水印、完整證據鏈，法院採信有保障。
-                </p>
-              </div>
-            </Link>
+          {/* Decorative element */}
+          <div className="absolute top-0 right-0 w-48 h-48 lg:w-64 lg:h-64">
+            <div className="absolute top-4 right-4 w-24 h-24 lg:w-32 lg:h-32 rounded-full bg-white/5 flex items-center justify-center">
+              <Shield className="w-12 h-12 lg:w-16 lg:h-16 text-white/20" />
+            </div>
           </div>
         </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-16 sm:py-24 lg:py-32 bg-[#1d1d1f]">
-        <div className="max-w-[980px] mx-auto px-5 sm:px-6 lg:px-0 text-center">
-          <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold text-white mb-4 sm:mb-6 px-4">
-            準備好保護您的創作了嗎？
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-white/50 mb-8 sm:mb-10 max-w-xl mx-auto px-4">
-            立即上傳您的第一張圖片，讓 Image Guardian Pro 為您守護每一份創意。
-          </p>
-          <Link
-            href="/assets"
-            className="inline-flex items-center justify-center gap-2 px-8 sm:px-10 py-4 sm:py-5 bg-white text-[#1d1d1f] rounded-full font-semibold text-base sm:text-lg hover:bg-[#f5f5f7] transition-all duration-200 active:scale-[0.97]"
-          >
-            立即開始
-            <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link href="/assets" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-neutral-300 transition-all duration-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-neutral-500">受保護資產</span>
+                <div className="w-9 h-9 rounded-xl bg-[#0071e3]/10 flex items-center justify-center">
+                  <ImageIcon className="w-4 h-4 text-[#0071e3]" />
+                </div>
+              </div>
+              <p className="text-2xl lg:text-3xl font-bold text-[#1d1d1f]">{assetCount}</p>
+              <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" />
+                持續增長中
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/scan" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-neutral-300 transition-all duration-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-neutral-500">掃描次數</span>
+                <div className="w-9 h-9 rounded-xl bg-[#34c759]/10 flex items-center justify-center">
+                  <Radar className="w-4 h-4 text-[#34c759]" />
+                </div>
+              </div>
+              <p className="text-2xl lg:text-3xl font-bold text-[#1d1d1f]">{scanCount}</p>
+              <p className="text-xs text-neutral-500 mt-1">
+                偵測到 {matchCount} 個結果
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/infringements" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-neutral-300 transition-all duration-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-neutral-500">待處理案件</span>
+                <div className="w-9 h-9 rounded-xl bg-[#ff9500]/10 flex items-center justify-center">
+                  <AlertTriangle className="w-4 h-4 text-[#ff9500]" />
+                </div>
+              </div>
+              <p className="text-2xl lg:text-3xl font-bold text-[#1d1d1f]">{pendingCases}</p>
+              <p className="text-xs text-neutral-500 mt-1">
+                需要您的關注
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/infringements" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-neutral-300 transition-all duration-200">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm text-neutral-500">已解決</span>
+                <div className="w-9 h-9 rounded-xl bg-[#34c759]/10 flex items-center justify-center">
+                  <CheckCircle className="w-4 h-4 text-[#34c759]" />
+                </div>
+              </div>
+              <p className="text-2xl lg:text-3xl font-bold text-[#1d1d1f]">{resolvedCases}</p>
+              <p className="text-xs text-green-600 mt-1 flex items-center gap-1">
+                <TrendingUp className="w-3 h-3" />
+                維權成功
+              </p>
+            </div>
           </Link>
         </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="py-6 sm:py-8 bg-[#f5f5f7] border-t border-black/[0.04] safe-area-inset">
-        <div className="max-w-[980px] mx-auto px-5 sm:px-6 lg:px-0 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-          <div className="flex items-center gap-2">
-            <Shield className="w-4 h-4 text-[#86868b]" />
-            <span className="text-sm font-medium text-[#86868b]">Image Guardian Pro</span>
-          </div>
-          <p className="text-xs text-[#86868b]">
-            Powered by Gemini AI
-          </p>
+        {/* Quick Actions */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link href="/assets" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-[#0071e3] transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#0071e3]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <FolderOpen className="w-5 h-5 text-[#0071e3]" />
+              </div>
+              <h3 className="font-semibold text-[#1d1d1f] mb-1">資產管理</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                上傳並管理原創圖片
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/scan" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-[#34c759] transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#34c759]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Radar className="w-5 h-5 text-[#34c759]" />
+              </div>
+              <h3 className="font-semibold text-[#1d1d1f] mb-1">智慧掃描</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                AI 驅動全網掃描
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/infringements" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-[#7c3aed] transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#7c3aed]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Shield className="w-5 h-5 text-[#7c3aed]" />
+              </div>
+              <h3 className="font-semibold text-[#1d1d1f] mb-1">維權中心</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                一鍵截圖存證檢舉
+              </p>
+            </div>
+          </Link>
+
+          <Link href="/evidence" className="group">
+            <div className="bg-white rounded-2xl p-5 border border-neutral-200 hover:shadow-lg hover:border-[#ff9500] transition-all duration-200">
+              <div className="w-11 h-11 rounded-xl bg-[#ff9500]/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <Scale className="w-5 h-5 text-[#ff9500]" />
+              </div>
+              <h3 className="font-semibold text-[#1d1d1f] mb-1">法律存證</h3>
+              <p className="text-sm text-neutral-500 leading-relaxed">
+                SHA-256 雜湊認證
+              </p>
+            </div>
+          </Link>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }

@@ -11,7 +11,7 @@ export default async function ScanPage() {
   ]);
 
   return (
-    <PageContainer>
+    <PageContainer title="掃描引擎">
       <PageHeader
         title="掃描引擎"
         description="全網監控，偵測潛在侵權行為"
@@ -19,7 +19,7 @@ export default async function ScanPage() {
       />
 
       {scansResult.error ? (
-        <div className="text-center py-12">
+        <div className="text-center py-12 bg-white rounded-2xl border border-neutral-200">
           <p className="text-red-500">{scansResult.error}</p>
           <p className="text-sm text-neutral-500 mt-2">
             請確認 Supabase 已正確設定並建立資料表

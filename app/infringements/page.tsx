@@ -23,15 +23,15 @@ export default async function InfringementsPage({
   ]);
 
   return (
-    <PageContainer>
+    <PageContainer title="維權中心">
       <PageHeader
         title="維權中心"
         description="追蹤侵權案件、執行存證、生成檢舉信"
       />
 
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* 統計卡片 */}
-        <Suspense fallback={<div className="h-24 bg-neutral-50 animate-pulse rounded-2xl" />}>
+        <Suspense fallback={<div className="h-24 bg-white animate-pulse rounded-2xl" />}>
           <InfringementStats stats={stats} />
         </Suspense>
 
@@ -43,7 +43,7 @@ export default async function InfringementsPage({
         />
 
         {/* 案件清單 */}
-        <Suspense fallback={<div className="h-96 bg-neutral-50 animate-pulse rounded-2xl" />}>
+        <Suspense fallback={<div className="h-96 bg-white animate-pulse rounded-2xl" />}>
           <InfringementList infringements={infringements || []} />
         </Suspense>
       </div>

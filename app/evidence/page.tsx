@@ -11,7 +11,7 @@ export default async function EvidencePage() {
   ]);
 
   return (
-    <PageContainer>
+    <PageContainer title="存證庫">
       <PageHeader
         title="維權存證中心"
         description="建立法律效力的存證紀錄，保障您的智慧財產權"
@@ -19,7 +19,7 @@ export default async function EvidencePage() {
       />
 
       {evidencesResult.error ? (
-        <div className="text-center py-12">
+        <div className="text-center py-12 bg-white rounded-2xl border border-neutral-200">
           <p className="text-red-500">{evidencesResult.error}</p>
           <p className="text-sm text-neutral-500 mt-2">
             請確認 Supabase 已正確設定並建立資料表

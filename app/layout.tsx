@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppHeader } from "@/components/layout/app-header";
-import { AppNav } from "@/components/layout/app-nav";
+import { Sidebar } from "@/components/layout/sidebar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,10 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-TW" className={inter.variable}>
-      <body className="min-h-screen bg-white antialiased font-sans">
-        <AppHeader />
-        <AppNav />
-        <main className="min-h-[calc(100vh-7rem)]">
+      <body className="min-h-screen bg-[#f8f9fa] antialiased font-sans">
+        <Sidebar />
+        <main className="lg:pl-[240px] min-h-screen transition-all duration-300">
           {children}
         </main>
       </body>
