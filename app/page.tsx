@@ -1,131 +1,166 @@
-import { PageContainer, PageHeader } from "@/components/layout/page-container";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FolderOpen, Radar, Scale, AlertTriangle } from "lucide-react";
 import Link from "next/link";
+import { getAssets } from "@/app/actions/asset-actions";
+import { getScans } from "@/app/actions/scan-actions";
+import { getInfringementStats } from "@/app/actions/infringement-actions";
 
-const stats = [
-  {
-    title: "資產總數",
-    value: "0",
-    description: "已上傳原圖",
-    icon: FolderOpen,
-    href: "/assets",
-    color: "bg-blue-50 text-blue-600",
-  },
-  {
-    title: "掃描次數",
-    value: "0",
-    description: "全網監控",
-    icon: Radar,
-    href: "/scan",
-    color: "bg-emerald-50 text-emerald-600",
-  },
-  {
-    title: "侵權偵測",
-    value: "0",
-    description: "待處理案件",
-    icon: AlertTriangle,
-    href: "/scan",
-    color: "bg-amber-50 text-amber-600",
-  },
-  {
-    title: "存證紀錄",
-    value: "0",
-    description: "法律保障",
-    icon: Scale,
-    href: "/evidence",
-    color: "bg-purple-50 text-purple-600",
-  },
-];
+export const dynamic = "force-dynamic";
 
-export default function DashboardPage() {
+export default async function HomePage() {
+  // 取得真實數據
+  const [assetsResult, scansResult, infringementStats] = await Promise.all([
+    getAssets(),
+    getScans(),
+    getInfringementStats(),
+  ]);
+
+  const assetCount = assetsResult.data?.length || 0;
+  const scanCount = scansResult.data?.length || 0;
+  const matchCount = scansResult.data?.reduce((sum, s) => sum + (s.match_count || 0), 0) || 0;
+  const pendingCases = infringementStats.pending || 0;
+
   return (
-    <PageContainer>
-      <PageHeader
-        title="戰情總覽"
-        description="Image Guardian Pro - 您的智慧財產守護者"
-      />
+    <div className="min-h-[80vh] flex flex-col">
+      {/* Hero Section */}
+      <section className="flex-1 flex flex-col items-center justify-center px-6 py-20">
+        <div className="text-center max-w-3xl mx-auto">
+          {/* Logo */}
+          <div className="mb-8">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-neutral-900 to-neutral-700 shadow-2xl">
+              <span className="text-4xl">🛡️</span>
+            </div>
+          </div>
 
-      {/* Stats Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <Link key={stat.title} href={stat.href}>
-              <Card className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-sm font-medium text-neutral-500">
-                    {stat.title}
-                  </CardTitle>
-                  <div className={`rounded-lg p-2 ${stat.color}`}>
-                    <Icon className="h-4 w-4" />
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-3xl font-bold">{stat.value}</div>
-                  <p className="text-xs text-neutral-500 mt-1">
-                    {stat.description}
-                  </p>
-                </CardContent>
-              </Card>
+          {/* Title */}
+          <h1 className="text-5xl md:text-6xl font-semibold tracking-tight text-neutral-900 mb-6">
+            Image Guardian
+            <span className="block text-neutral-400 text-3xl md:text-4xl font-normal mt-2">
+              Pro
+            </span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-xl text-neutral-500 mb-12 max-w-xl mx-auto leading-relaxed">
+            AI 智慧圖片守護系統。
+            <br />
+            保護您的視覺資產，追蹤侵權，維護權益。
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/assets"
+              className="inline-flex items-center justify-center px-8 py-4 bg-neutral-900 text-white rounded-full text-lg font-medium hover:bg-neutral-800 transition-all hover:scale-105 shadow-lg"
+            >
+              開始使用
             </Link>
-          );
-        })}
-      </div>
-
-      {/* Quick Actions */}
-      <div className="mt-12">
-        <h2 className="text-lg font-semibold mb-4">快速操作</h2>
-        <div className="grid gap-4 md:grid-cols-3">
-          <Link href="/assets">
-            <Card className="cursor-pointer transition-all duration-200 hover:shadow-lg group">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="rounded-xl bg-neutral-100 p-3 group-hover:bg-neutral-900 transition-colors">
-                  <FolderOpen className="h-6 w-6 text-neutral-600 group-hover:text-white transition-colors" />
-                </div>
-                <div>
-                  <h3 className="font-medium">上傳原創圖片</h3>
-                  <p className="text-sm text-neutral-500">建立您的數位資產庫</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/scan">
-            <Card className="cursor-pointer transition-all duration-200 hover:shadow-lg group">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="rounded-xl bg-neutral-100 p-3 group-hover:bg-neutral-900 transition-colors">
-                  <Radar className="h-6 w-6 text-neutral-600 group-hover:text-white transition-colors" />
-                </div>
-                <div>
-                  <h3 className="font-medium">發起全網掃描</h3>
-                  <p className="text-sm text-neutral-500">偵測潛在侵權行為</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/evidence">
-            <Card className="cursor-pointer transition-all duration-200 hover:shadow-lg group">
-              <CardContent className="flex items-center gap-4 p-6">
-                <div className="rounded-xl bg-neutral-100 p-3 group-hover:bg-neutral-900 transition-colors">
-                  <Scale className="h-6 w-6 text-neutral-600 group-hover:text-white transition-colors" />
-                </div>
-                <div>
-                  <h3 className="font-medium">建立維權存證</h3>
-                  <p className="text-sm text-neutral-500">法律保障一鍵完成</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
+            <Link
+              href="/scan"
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-neutral-900 rounded-full text-lg font-medium border border-neutral-200 hover:border-neutral-400 transition-all hover:scale-105"
+            >
+              發起掃描
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* System Info */}
-      <div className="mt-12 text-center text-sm text-neutral-400">
-        <p>Image Guardian Pro v0.1.0</p>
-        <p className="mt-1">請先在 Supabase 建立資料表後，填入 .env.local 環境變數</p>
-      </div>
-    </PageContainer>
+      {/* Stats Section */}
+      <section className="border-t border-neutral-100 bg-neutral-50/50">
+        <div className="max-w-5xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            <Link href="/assets" className="group text-center">
+              <div className="text-4xl md:text-5xl font-semibold text-neutral-900 group-hover:text-blue-600 transition-colors">
+                {assetCount}
+              </div>
+              <div className="text-sm text-neutral-500 mt-2">受保護資產</div>
+            </Link>
+
+            <Link href="/scan" className="group text-center">
+              <div className="text-4xl md:text-5xl font-semibold text-neutral-900 group-hover:text-emerald-600 transition-colors">
+                {scanCount}
+              </div>
+              <div className="text-sm text-neutral-500 mt-2">掃描次數</div>
+            </Link>
+
+            <Link href="/scan" className="group text-center">
+              <div className="text-4xl md:text-5xl font-semibold text-neutral-900 group-hover:text-amber-600 transition-colors">
+                {matchCount}
+              </div>
+              <div className="text-sm text-neutral-500 mt-2">偵測結果</div>
+            </Link>
+
+            <Link href="/infringements" className="group text-center">
+              <div className="text-4xl md:text-5xl font-semibold text-neutral-900 group-hover:text-red-600 transition-colors">
+                {pendingCases}
+              </div>
+              <div className="text-sm text-neutral-500 mt-2">待處理案件</div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="border-t border-neutral-100">
+        <div className="max-w-5xl mx-auto px-6 py-20">
+          <h2 className="text-3xl font-semibold text-center text-neutral-900 mb-16">
+            核心功能
+          </h2>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Feature 1 */}
+            <Link href="/assets" className="group">
+              <div className="p-8 rounded-3xl bg-white border border-neutral-100 hover:border-neutral-200 hover:shadow-xl transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-blue-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">📁</span>
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  資產庫
+                </h3>
+                <p className="text-neutral-500 leading-relaxed">
+                  上傳並管理您的原創圖片，建立完整的數位資產清單。
+                </p>
+              </div>
+            </Link>
+
+            {/* Feature 2 */}
+            <Link href="/scan" className="group">
+              <div className="p-8 rounded-3xl bg-white border border-neutral-100 hover:border-neutral-200 hover:shadow-xl transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">🔍</span>
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  智慧掃描
+                </h3>
+                <p className="text-neutral-500 leading-relaxed">
+                  AI 驅動的全網掃描，偵測蝦皮、momo、露天等平台的侵權圖片。
+                </p>
+              </div>
+            </Link>
+
+            {/* Feature 3 */}
+            <Link href="/infringements" className="group">
+              <div className="p-8 rounded-3xl bg-white border border-neutral-100 hover:border-neutral-200 hover:shadow-xl transition-all duration-300">
+                <div className="w-14 h-14 rounded-2xl bg-amber-50 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                  <span className="text-2xl">⚖️</span>
+                </div>
+                <h3 className="text-xl font-semibold text-neutral-900 mb-3">
+                  維權中心
+                </h3>
+                <p className="text-neutral-500 leading-relaxed">
+                  一鍵存證、AI 鑑定報告、自動生成檢舉信，守護您的權益。
+                </p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-neutral-100 py-8">
+        <div className="text-center text-sm text-neutral-400">
+          <p>Image Guardian Pro v1.0</p>
+          <p className="mt-1">Powered by Gemini AI</p>
+        </div>
+      </footer>
+    </div>
   );
 }
